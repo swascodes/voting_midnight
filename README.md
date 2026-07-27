@@ -81,19 +81,19 @@ npm run test
 
 ## Screenshots
 
-- ![Compile Output](compile-output.png)
-<<<<<<< HEAD
-- ![Home Screen - Cyber Forest Theme](home.png)
-- ![Connect Wallet Screen](connect-wallet.png)
-- ![Vote Submitted successfully with Transaction Hash](vote-submitted.png)
-- ![Live Results from Public Ledger](results.png)
+
+<img width="527" height="145" alt="Screenshot 2026-07-27 110918" src="https://github.com/user-attachments/assets/26671ee2-5348-438a-8122-970ad2e4f44f" />
+
+<img width="1292" height="686" alt="Screenshot 2026-07-27 111521" src="https://github.com/user-attachments/assets/1ecba01e-4e39-4590-b341-8f2f7bd96820" />
+<img width="1247" height="685" alt="Screenshot 2026-07-27 111539" src="https://github.com/user-attachments/assets/9bbd0ccc-ceea-4bc1-bec6-cb45b49f31c6" />
+
+<img width="1237" height="683" alt="Screenshot 2026-07-27 111606" src="https://github.com/user-attachments/assets/8aa2b7dc-8f09-4ea8-aca3-ead99d1fd73f" />
+
+<img width="1256" height="696" alt="Screenshot 2026-07-27 111621" src="https://github.com/user-attachments/assets/7b0f1bd3-3543-4aec-af4f-9a48b7f21670" />
+
+
 =======
-- ![Deployment](deployment.png)
-- ![Home Screen](<img width="1411" height="686" alt="image" src="https://github.com/user-attachments/assets/885008ec-cfbe-4bde-bdc0-2a5131352144" />
-)
-- ![Voting Interface](vote.png)
-- ![Results Page](results.png)
->>>>>>> 90e1dad014cfbee865d5f349b976c3b9d6ac9a4d
+
 
 ## Live Demo
 
