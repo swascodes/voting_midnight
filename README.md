@@ -42,7 +42,7 @@ The application is structured into two main layers:
 ## Contract Address
 
 **Preview:** Pending Deployment
-**Preprod:** Pending Deployment
+
 
 ## Local Setup
 
