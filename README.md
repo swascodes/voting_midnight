@@ -81,13 +81,11 @@ npm run test
 
 ## Screenshots
 
-*(To be added prior to submission)*
-
 - ![Compile Output](compile-output.png)
-- ![Deployment](deployment.png)
-- ![Home Screen](home.png)
-- ![Voting Interface](vote.png)
-- ![Results Page](results.png)
+- ![Home Screen - Cyber Forest Theme](home.png)
+- ![Connect Wallet Screen](connect-wallet.png)
+- ![Vote Submitted successfully with Transaction Hash](vote-submitted.png)
+- ![Live Results from Public Ledger](results.png)
 
 ## Live Demo
 
