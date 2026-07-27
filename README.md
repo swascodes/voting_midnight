@@ -1,5 +1,7 @@
 # Midnight Voting
 
+🚀 **Live Demo:** [https://voting-midnight.vercel.app/](https://voting-midnight.vercel.app/)
+
 A privacy-preserving voting application built on the Midnight Network for the Midnight Builder Challenge.
 
 ## Description
@@ -81,23 +83,14 @@ npm run test
 
 ## Screenshots
 
+<img width="527" height="145" alt="Compile Output" src="https://github.com/user-attachments/assets/26671ee2-5348-438a-8122-970ad2e4f44f" />
 
-<img width="527" height="145" alt="Screenshot 2026-07-27 110918" src="https://github.com/user-attachments/assets/26671ee2-5348-438a-8122-970ad2e4f44f" />
+<img width="1292" height="686" alt="Home Screen" src="https://github.com/user-attachments/assets/1ecba01e-4e39-4590-b341-8f2f7bd96820" />
+<img width="1247" height="685" alt="Connect Wallet" src="https://github.com/user-attachments/assets/9bbd0ccc-ceea-4bc1-bec6-cb45b49f31c6" />
 
-<img width="1292" height="686" alt="Screenshot 2026-07-27 111521" src="https://github.com/user-attachments/assets/1ecba01e-4e39-4590-b341-8f2f7bd96820" />
-<img width="1247" height="685" alt="Screenshot 2026-07-27 111539" src="https://github.com/user-attachments/assets/9bbd0ccc-ceea-4bc1-bec6-cb45b49f31c6" />
+<img width="1237" height="683" alt="Vote Submitted" src="https://github.com/user-attachments/assets/8aa2b7dc-8f09-4ea8-aca3-ead99d1fd73f" />
 
-<img width="1237" height="683" alt="Screenshot 2026-07-27 111606" src="https://github.com/user-attachments/assets/8aa2b7dc-8f09-4ea8-aca3-ead99d1fd73f" />
-
-<img width="1256" height="696" alt="Screenshot 2026-07-27 111621" src="https://github.com/user-attachments/assets/7b0f1bd3-3543-4aec-af4f-9a48b7f21670" />
-
-
-=======
-
-
-## Live Demo
-
-**Vercel:** [Pending Deployment](#)
+<img width="1256" height="696" alt="Live Results" src="https://github.com/user-attachments/assets/7b0f1bd3-3543-4aec-af4f-9a48b7f21670" />
 
 ## Future Improvements
 
