@@ -85,7 +85,8 @@ npm run test
 
 - ![Compile Output](compile-output.png)
 - ![Deployment](deployment.png)
-- ![Home Screen](home.png)
+- ![Home Screen](<img width="1411" height="686" alt="image" src="https://github.com/user-attachments/assets/885008ec-cfbe-4bde-bdc0-2a5131352144" />
+)
 - ![Voting Interface](vote.png)
 - ![Results Page](results.png)
 
