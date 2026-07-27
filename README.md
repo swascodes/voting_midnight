@@ -82,10 +82,18 @@ npm run test
 ## Screenshots
 
 - ![Compile Output](compile-output.png)
+<<<<<<< HEAD
 - ![Home Screen - Cyber Forest Theme](home.png)
 - ![Connect Wallet Screen](connect-wallet.png)
 - ![Vote Submitted successfully with Transaction Hash](vote-submitted.png)
 - ![Live Results from Public Ledger](results.png)
+=======
+- ![Deployment](deployment.png)
+- ![Home Screen](<img width="1411" height="686" alt="image" src="https://github.com/user-attachments/assets/885008ec-cfbe-4bde-bdc0-2a5131352144" />
+)
+- ![Voting Interface](vote.png)
+- ![Results Page](results.png)
+>>>>>>> 90e1dad014cfbee865d5f349b976c3b9d6ac9a4d
 
 ## Live Demo
 
