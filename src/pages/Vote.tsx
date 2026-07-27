@@ -134,7 +134,7 @@ export default function Vote() {
         <div className="flex flex-wrap items-center gap-4 text-sm font-mono text-gray-300">
           <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
             <span className="text-gray-500 mr-2">Address:</span>
-            {wallet.slice(0, 10)}...{wallet.slice(-6)}
+            {typeof wallet === 'string' ? `${wallet.slice(0, 10)}...${wallet.slice(-6)}` : 'Connected'}
           </div>
           <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
             <span className="text-gray-500 mr-2">Network:</span>

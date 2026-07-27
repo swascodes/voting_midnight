@@ -1,18 +1,15 @@
 export interface MidnightWalletAPI {
-  connect: () => Promise<MidnightDAppAPI>;
+  connect: (networkId: string) => Promise<MidnightDAppAPI>;
   name?: string;
   version?: string;
 }
 
-export interface WalletState {
-  address: string;
-  network: string | number;
-  balances?: Record<string, string | number>;
-}
-
 export interface MidnightDAppAPI {
-  state?: any; // Could be a function returning an observable, or the observable itself, or just an object
-  state$?: any; // Sometimes named state$
+  getUnshieldedAddress: () => Promise<string>;
+  getUnshieldedBalances: () => Promise<unknown>;
+  getShieldedAddresses?: () => Promise<unknown[]>;
+  getShieldedBalances?: () => Promise<unknown[]>;
+  getConfiguration: () => Promise<unknown>;
   signTransaction: (tx: unknown) => Promise<unknown>;
   submitTransaction: (tx: unknown) => Promise<unknown>;
 }
@@ -20,7 +17,6 @@ export interface MidnightDAppAPI {
 declare global {
   interface Window {
     midnight?: {
-      mnLace?: MidnightWalletAPI;
       [key: string]: MidnightWalletAPI | undefined;
     };
   }
@@ -30,14 +26,13 @@ class BlockchainService {
   private api: MidnightDAppAPI | null = null;
   private currentAddress: string | null = null;
   private currentNetwork: string | number | null = null;
-  private currentBalances: Record<string, string | number> | null = null;
-  private stateSubscription: { unsubscribe: () => void } | null = null;
+  private currentBalances: any = null;
 
   async connectWallet(): Promise<{ address: string; network: string | number; balances: any }> {
     if (this.api && this.currentAddress) {
       return { 
         address: this.currentAddress, 
-        network: this.currentNetwork || 'unknown', 
+        network: this.currentNetwork || 'preview', 
         balances: this.currentBalances 
       };
     }
@@ -61,61 +56,57 @@ class BlockchainService {
     }
 
     try {
-      this.api = await wallet.connect();
+      this.api = await wallet.connect("preview");
       
-      return await new Promise((resolve, reject) => {
-        // Try to find the state observable or state object
-        let stateObj = this.api!.state || this.api!.state$;
-        if (typeof stateObj === 'function') {
-          // If it's a function (like api.state()), call it to get the observable
-          stateObj = stateObj();
+      const rawAddress = await this.api.getUnshieldedAddress();
+      console.log("Raw Address from wallet:", rawAddress);
+      
+      let addressStr = String(rawAddress);
+      if (Array.isArray(rawAddress)) {
+        addressStr = String(rawAddress[0]);
+      } else if (rawAddress && typeof rawAddress === 'object') {
+        addressStr = String(Object.values(rawAddress)[0]);
+      }
+      const address = addressStr;
+      
+      let balance = null;
+      try {
+        if (typeof this.api.getUnshieldedBalances === 'function') {
+          balance = await this.api.getUnshieldedBalances();
         }
+      } catch (e) {
+        console.warn("Could not fetch balances", e);
+      }
+      
+      let config: any = "preview";
+      try {
+        if (typeof this.api.getConfiguration === 'function') {
+          config = await this.api.getConfiguration();
+        }
+      } catch (e) {
+        console.warn("Could not fetch configuration", e);
+      }
 
-        if (stateObj && typeof stateObj.subscribe === 'function') {
-          this.stateSubscription = stateObj.subscribe({
-            next: (state: WalletState) => {
-              console.log("Wallet state received:", state);
-              this.currentAddress = state.address;
-              this.currentNetwork = state.network;
-              this.currentBalances = state.balances || {};
-              resolve({
-                address: this.currentAddress,
-                network: this.currentNetwork,
-                balances: this.currentBalances
-              });
-            },
-            error: (err: Error) => reject(new Error(err.message || "Network unavailable or wallet error."))
-          });
-        } else if (stateObj && stateObj.address) {
-          // Fallback if it's just a static object
-          this.currentAddress = stateObj.address;
-          this.currentNetwork = stateObj.network || 'unknown';
-          this.currentBalances = stateObj.balances || {};
-          resolve({
-            address: this.currentAddress,
-            network: this.currentNetwork,
-            balances: this.currentBalances
-          });
-        } else {
-          console.error("Wallet API state object:", stateObj, "API:", this.api);
-          reject(new Error("Wallet API does not support state() or the state object is missing 'address'. Please check the console."));
-        }
-      });
+      this.currentAddress = address;
+      this.currentNetwork = "preview";
+      this.currentBalances = balance || {};
+
+      return {
+        address: this.currentAddress,
+        network: this.currentNetwork,
+        balances: this.currentBalances
+      };
+      
     } catch (e: any) {
       console.error("Connection Error Details:", e);
       if (e.message && e.message.toLowerCase().includes('locked')) {
         throw new Error("Wallet is locked. Please unlock Lace and try again.");
       }
-      // Preserve the actual error message to help with debugging
       throw new Error(e.message || "Wallet connection failed or was rejected by the user.");
     }
   }
 
   async disconnectWallet(): Promise<void> {
-    if (this.stateSubscription) {
-      this.stateSubscription.unsubscribe();
-      this.stateSubscription = null;
-    }
     this.api = null;
     this.currentAddress = null;
     this.currentNetwork = null;
@@ -134,7 +125,7 @@ class BlockchainService {
     return this.currentNetwork;
   }
 
-  getBalance(): Record<string, string | number> | null {
+  getBalance(): any {
     return this.currentBalances;
   }
 
@@ -146,6 +137,10 @@ class BlockchainService {
   async submitTransaction(tx: unknown): Promise<unknown> {
     if (!this.api) throw new Error("Wallet not connected.");
     throw new Error("Contract not deployed");
+  }
+
+  getContractAddress(): string | null {
+    return import.meta.env.VITE_CONTRACT_ADDRESS || null;
   }
 
   // Backwards compatibility for the UI mock state structure 
