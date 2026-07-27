@@ -54,7 +54,7 @@ export default function Home() {
       <div className="pt-8">
         <Link 
           to="/vote" 
-          className="inline-flex items-center space-x-2 bg-primary hover:bg-primary-hover text-white px-8 py-4 rounded-xl font-semibold transition-all hover:scale-105 shadow-lg shadow-primary/25"
+          className="btn-primary space-x-2 text-lg"
         >
           <span>Enter the Voting Booth</span>
           <ArrowRight className="w-5 h-5" />

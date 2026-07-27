@@ -19,8 +19,27 @@ export default function Layout({ children }: { children: ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-xl">
+    <div className="min-h-screen flex flex-col font-sans relative overflow-hidden bg-background text-gray-200">
+      {/* Background Animated Cyber Forest */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="cyber-grid"></div>
+        {/* Generate multiple fireflies with random positions/delays */}
+        {[...Array(15)].map((_, i) => (
+          <div 
+            key={i} 
+            className="firefly" 
+            style={{ 
+              left: `${Math.random() * 100}%`, 
+              animationDuration: `${10 + Math.random() * 20}s`,
+              animationDelay: `-${Math.random() * 10}s`
+            }}
+          ></div>
+        ))}
+      </div>
+
+      {/* Main Content Layer */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
@@ -60,6 +79,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <p>Powered by Midnight Network</p>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

@@ -7,10 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0a',
-        surface: '#141414',
-        primary: '#4f46e5',
-        'primary-hover': '#4338ca',
+        background: '#040b08', // Abyssal green/black
+        surface: '#0a1a13',    // Deep forest
+        primary: '#00ff9d',    // Cyber neon green
+        'primary-hover': '#00cc7d',
+        accent: '#00e5ff',     // Cyber cyan
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

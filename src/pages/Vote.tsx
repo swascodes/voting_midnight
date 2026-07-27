@@ -61,9 +61,9 @@ export default function Vote() {
         <button 
           onClick={handleConnect}
           disabled={isConnecting}
-          className="bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-white px-8 py-3 rounded-xl font-semibold transition-all flex items-center space-x-2"
+          className="btn-primary"
         >
-          {isConnecting && <Loader2 className="w-5 h-5 animate-spin" />}
+          {isConnecting && <Loader2 className="w-5 h-5 animate-spin mr-2" />}
           <span>{isConnecting ? 'Connecting...' : 'Connect Wallet'}</span>
         </button>
       </div>
@@ -88,7 +88,7 @@ export default function Vote() {
         )}
         <button 
           onClick={() => navigate('/results')}
-          className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-semibold transition-all"
+          className="btn-secondary"
         >
           View Live Results
         </button>
@@ -129,9 +129,9 @@ export default function Vote() {
         <button 
           onClick={handleVote}
           disabled={!selectedCandidate || isVoting}
-          className="bg-primary hover:bg-primary-hover disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-8 py-4 rounded-xl font-semibold transition-all flex items-center space-x-2"
+          className="btn-primary"
         >
-          {isVoting && <Loader2 className="w-5 h-5 animate-spin" />}
+          {isVoting && <Loader2 className="w-5 h-5 animate-spin mr-2" />}
           <span>{isVoting ? 'Generating ZK Proof...' : 'Submit Secret Vote'}</span>
         </button>
       </div>
