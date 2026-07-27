@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Wallet, Loader2, CheckCircle2 } from 'lucide-react';
-import { blockchainService, Candidate } from '../lib/blockchain';
+import { Wallet, Loader2, CheckCircle2, LogOut } from 'lucide-react';
+import { blockchainService } from '../lib/blockchain';
+import toast from 'react-hot-toast';
 
 export default function Vote() {
   const navigate = useNavigate();
   const [wallet, setWallet] = useState<string | null>(null);
+  const [network, setNetwork] = useState<string | number | null>(null);
+  const [balance, setBalance] = useState<any>(null);
+  
   const [isConnecting, setIsConnecting] = useState(false);
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [candidates, setCandidates] = useState<any[]>([]);
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
   useEffect(() => {
+    if (blockchainService.isConnected()) {
+      setWallet(blockchainService.getAddress());
+      setNetwork(blockchainService.getNetwork());
+      setBalance(blockchainService.getBalance());
+    }
     blockchainService.getElectionState().then(state => {
       setCandidates(state.candidates);
     });
@@ -24,13 +33,25 @@ export default function Vote() {
     try {
       const w = await blockchainService.connectWallet();
       setWallet(w.address);
+      setNetwork(w.network);
+      setBalance(w.balances);
+      toast.success("Connected to Lace Wallet!");
+      
       const voted = await blockchainService.getVoteStatus(w.address);
       setHasVoted(voted);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to connect wallet.");
     } finally {
       setIsConnecting(false);
     }
+  };
+
+  const handleDisconnect = async () => {
+    await blockchainService.disconnectWallet();
+    setWallet(null);
+    setNetwork(null);
+    setBalance(null);
+    toast.success("Disconnected wallet.");
   };
 
   const handleVote = async () => {
@@ -40,9 +61,9 @@ export default function Vote() {
       const result = await blockchainService.castVote(selectedCandidate);
       setTxHash(result.txHash);
       setHasVoted(true);
-    } catch (err) {
-      console.error(err);
-      alert('Voting failed. Did you already vote?');
+      toast.success("Vote cast successfully!");
+    } catch (err: any) {
+      toast.error(err.message || "Voting failed.");
     } finally {
       setIsVoting(false);
     }
@@ -96,15 +117,47 @@ export default function Vote() {
     );
   }
 
+  // Format balances if available
+  let balanceDisplay = "0 tNight";
+  if (balance && Object.keys(balance).length > 0) {
+    balanceDisplay = "Balances Available";
+  }
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      {/* Top Bar: Connected State */}
+      <div className="flex flex-col md:flex-row items-center justify-between glass-panel p-4 rounded-2xl gap-4">
+        <div className="flex items-center space-x-3 text-green-400">
+          <CheckCircle2 className="w-6 h-6" />
+          <span className="font-semibold text-lg">Connected</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-4 text-sm font-mono text-gray-300">
+          <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
+            <span className="text-gray-500 mr-2">Address:</span>
+            {wallet.slice(0, 10)}...{wallet.slice(-6)}
+          </div>
+          <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
+            <span className="text-gray-500 mr-2">Network:</span>
+            {network || 'Unknown'}
+          </div>
+          <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
+            <span className="text-gray-500 mr-2">Wallet:</span>
+            {balanceDisplay}
+          </div>
+          <button 
+            onClick={handleDisconnect}
+            className="flex items-center space-x-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg border border-red-500/20 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Disconnect</span>
+          </button>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Cast Your Vote</h2>
           <p className="text-gray-400 mt-2">Select an option below. Your choice remains private.</p>
-        </div>
-        <div className="text-sm px-4 py-2 bg-white/5 rounded-lg border border-white/10 font-mono text-gray-300">
-          {wallet.slice(0, 10)}...{wallet.slice(-4)}
         </div>
       </div>
 
