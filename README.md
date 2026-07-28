@@ -84,6 +84,7 @@ npm run test
 ## Screenshots
 
 <img width="527" height="145" alt="Compile Output" src="https://github.com/user-attachments/assets/26671ee2-5348-438a-8122-970ad2e4f44f" />
+<img width="1078" height="701" alt="image" src="https://github.com/user-attachments/assets/39db2088-3986-4710-a43f-4025de7752e9" />
 
 <img width="1292" height="686" alt="Home Screen" src="https://github.com/user-attachments/assets/1ecba01e-4e39-4590-b341-8f2f7bd96820" />
 <img width="1247" height="685" alt="Connect Wallet" src="https://github.com/user-attachments/assets/9bbd0ccc-ceea-4bc1-bec6-cb45b49f31c6" />
